@@ -8,7 +8,7 @@ An application that creates notes based on a map
 
 ## Environment
 - Language: TypeScript
-- Server Engine: Node.js
+- Server Engine: Node.js(v20.11.1)
 - DataBase: Postgres
 
 

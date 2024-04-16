@@ -16,6 +16,8 @@ An application that creates notes based on a map
 
 ## branch process
 
-- feature
+- feature-{feature name}
+  ->feature
+  -> develop
   -> main
   -> release

@@ -1,15 +1,32 @@
+import userRouter from './routes/user/user.router';
 import express, { Request, Response, NextFunction } from 'express';
 
-const app = express();
+class Server {
+  public app: express.Application;
 
-app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
-  res.send('welcome!');
-});
+  constructor() {
+    this.app = express();
+  }
 
-app.listen('1234', () => {
-  console.log(`
-  ################################################
-  🛡️  Server listening on port: 1234🛡️
-  ################################################
-`);
-});
+  private settingRoute() {
+    this.app.use('/user', userRouter);
+  }
+
+  private listen() {
+    this.app.listen('1234', () => {
+      console.log(`
+      ################################################
+      🛡️  Server listening on port: 1234🛡️
+      ################################################
+    `);
+    });
+  }
+
+  init() {
+    this.settingRoute();
+    this.listen();
+  }
+}
+
+const server = new Server();
+server.init();

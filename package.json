@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose",
-    "start": "node dist/app.js",
+    "start": "cross-env NODE_ENV=prd node dist/app.js",
     "build": "tsc -p .",
-    "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts"
+    "dev": "cross-env NODE_ENV=dev nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -32,9 +32,12 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "inversify": "^6.0.2",
     "morgan": "^1.10.0",
-    "reflect-metadata": "^0.2.2"
+    "pg": "^8.11.5",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   }
 }

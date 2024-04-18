@@ -5,6 +5,8 @@ import { Container } from 'inversify';
 import UserService from './services/user.service';
 import { UserController } from './controllers/user.controller';
 import { TYPES } from '../_standard_/Ioc.symbol/types';
+import UserConfigService from './services/user.config.service';
+import UserRepository from './repositories/user.repository';
 
 export class UserModule {
   private readonly container: Container;
@@ -22,6 +24,14 @@ export class UserModule {
     this.container
       .bind<UserController>(TYPES.UserController)
       .to(UserController)
+      .inSingletonScope();
+    this.container
+      .bind<UserConfigService>(TYPES.UserConfigService)
+      .to(UserConfigService)
+      .inSingletonScope();
+    this.container
+      .bind<UserRepository>(TYPES.UserRepository)
+      .to(UserRepository)
       .inSingletonScope();
   }
 

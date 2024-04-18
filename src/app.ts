@@ -1,5 +1,6 @@
 import { UserModule } from './user/user.module';
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
+import morgan from 'morgan';
 
 class Server {
   public app: express.Application;
@@ -17,6 +18,12 @@ class Server {
   initOptions(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded());
+    // this.app.use(morgan('combined'));
+    morgan('combined', {
+      skip: function (req, res) {
+        return res.statusCode < 400;
+      }
+    });
   }
 
   private listen() {
@@ -30,7 +37,7 @@ class Server {
   }
 
   init() {
-    // this.initOptions();
+    this.initOptions();
     this.settingRoute();
     this.listen();
   }

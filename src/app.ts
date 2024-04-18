@@ -1,4 +1,4 @@
-import userRouter from './routes/user/user.router';
+import { UserModule } from './user/user.module';
 import express, { Request, Response, NextFunction } from 'express';
 
 class Server {
@@ -9,7 +9,14 @@ class Server {
   }
 
   private settingRoute() {
-    this.app.use('/user', userRouter);
+    const userModule = new UserModule();
+    const userRoute = userModule.setRoute();
+    this.app.use('/user', userRoute);
+  }
+
+  initOptions(): void {
+    this.app.use(express.json());
+    this.app.use(express.urlencoded());
   }
 
   private listen() {
@@ -23,6 +30,7 @@ class Server {
   }
 
   init() {
+    // this.initOptions();
     this.settingRoute();
     this.listen();
   }

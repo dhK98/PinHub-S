@@ -1,15 +1,40 @@
+import { UserModule } from './user/user.module';
 import express, { Request, Response, NextFunction } from 'express';
 
-const app = express();
+class Server {
+  public app: express.Application;
 
-app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
-  res.send('welcome!');
-});
+  constructor() {
+    this.app = express();
+  }
 
-app.listen('1234', () => {
-  console.log(`
-  ################################################
-  🛡️  Server listening on port: 1234🛡️
-  ################################################
-`);
-});
+  private settingRoute() {
+    const userModule = new UserModule();
+    const userRoute = userModule.setRoute();
+    this.app.use('/user', userRoute);
+  }
+
+  initOptions(): void {
+    this.app.use(express.json());
+    this.app.use(express.urlencoded());
+  }
+
+  private listen() {
+    this.app.listen('1234', () => {
+      console.log(`
+      ################################################
+      🛡️  Server listening on port: 1234🛡️
+      ################################################
+    `);
+    });
+  }
+
+  init() {
+    // this.initOptions();
+    this.settingRoute();
+    this.listen();
+  }
+}
+
+const server = new Server();
+server.init();

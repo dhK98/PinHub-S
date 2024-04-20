@@ -1,18 +1,17 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../_standard_/Ioc.symbol/types';
-import UserConfigService from './user.config.service';
+import { TYPES } from '../../_common_/Ioc.symbol/types';
+import UserRepository from '../repositories/user.repository';
 
 @injectable()
 export default class UserService {
   constructor(
-    @inject(TYPES.UserConfigService)
-    private readonly userConfigService: UserConfigService
+    @inject(TYPES.UserRepository)
+    private readonly userRepository: UserRepository
   ) {}
   async getUserById(userId: String) {
     return '1213';
   }
   async createUser() {
-    console.log(this.userConfigService.config.database.password);
     return 'success!!';
   }
 }

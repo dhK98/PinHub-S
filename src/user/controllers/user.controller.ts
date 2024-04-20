@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import UserService from '../services/user.service';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../_standard_/Ioc.symbol/types';
+import { TYPES } from '../../_common_/Ioc.symbol/types';
 
 @injectable()
 export class UserController {
@@ -25,7 +25,6 @@ export class UserController {
   // post user
   async createUser(req: Request, res: Response) {
     try {
-      console.log(this.userService);
       const userData = req.body;
       const newUser = await this.userService.createUser();
       res.status(201).json(newUser);

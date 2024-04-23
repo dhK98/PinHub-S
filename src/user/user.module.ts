@@ -1,7 +1,7 @@
 // user-module.ts
 import 'reflect-metadata';
 import express, { Router } from 'express';
-import { AsyncContainerModule, Container } from 'inversify';
+import { Container } from 'inversify';
 import UserService from './services/user.service';
 import { UserController } from './controllers/user.controller';
 import { TYPES } from '../_common_/Ioc.symbol/types';
@@ -65,9 +65,13 @@ export class UserModule implements ServiceModule {
     const userController = this.container.get<UserController>(
       TYPES.UserController
     );
-    router.get('/', (req, res) => {
-      userController.createUser(req, res);
+    router.get('/', (req, res, next) => {
+      userController.getUser(req, res, next);
     });
+    router.post('/', (req, res, next) => {
+      userController.createUser(req, res, next);
+    });
+
     // route set
     this.app.use('/user', router);
   }

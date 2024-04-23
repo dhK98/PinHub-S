@@ -1,6 +1,9 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import { AppModule } from './app.module';
+import { notFoundExceptionMiddleware } from './_common_/middlewares/404.handler.middleware';
+import { errorHandlingMiddleware } from './_common_/middlewares/error.handler.middleware';
+import 'express-async-errors';
 
 class Server {
   public app: express.Application;
@@ -11,7 +14,7 @@ class Server {
   }
 
   initOptions(): void {
-    // this.app.use(express.json());
+    this.app.use(express.json());
     // this.app.use(express.urlencoded());
     this.app.use(morgan('combined'));
     morgan('combined', {
@@ -31,9 +34,17 @@ class Server {
     });
   }
 
+  private setMiddleware() {
+    this.app.use(errorHandlingMiddleware);
+    this.app.use(notFoundExceptionMiddleware);
+
+    // this.app.use(errorHandler());
+  }
+
   init() {
     this.initOptions();
     this.appModule.startModules();
+    this.setMiddleware();
     this.listen();
   }
 }

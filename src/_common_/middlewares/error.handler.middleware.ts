@@ -9,5 +9,9 @@ export function errorHandlingMiddleware(
 ) {
   console.error(err.stack);
   console.log('exxxx! middleware exception');
-  res.status(500).send('Internal server error');
+  res.status(err.status).json({
+    success: false,
+    message: err.message,
+    statusCode: err.status
+  });
 }

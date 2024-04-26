@@ -28,6 +28,6 @@ export class UserController {
   @BodyValidate(CreateUserDto)
   async createUser(req: Request, res: Response, next: NextFunction) {
     const newUser = await this.userService.createUser();
-    throw new HttpException(401, 'errrr');
+    next(newUser);
   }
 }

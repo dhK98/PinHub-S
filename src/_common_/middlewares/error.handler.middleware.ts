@@ -8,7 +8,7 @@ export function errorHandlingMiddleware(
   next: NextFunction
 ) {
   console.error(err.stack);
-  console.log('exxxx! middleware exception');
+  console.log('thought middleware exception');
   res.status(err.status).json({
     success: false,
     message: err.message,

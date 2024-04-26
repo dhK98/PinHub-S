@@ -10,7 +10,7 @@ export const errorConverter = (
 ) => {
   let error = err;
   console.log('is not instance of HttpException');
-  if (!(err instanceof HttpException)) {
+  if (!(err instanceof Error)) {
     const status = error.statusCode || ErrorCode.InternalServerError;
     const message = error.message || 'Internal Server Error';
     error = new HttpException(status, message);

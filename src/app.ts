@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { notFoundExceptionMiddleware } from './_common_/middlewares/404.handler.middleware';
 import { errorHandlingMiddleware } from './_common_/middlewares/error.handler.middleware';
 import 'express-async-errors';
+import { successHandlingMiddleware } from './_common_/middlewares/success.middleware';
 
 class Server {
   public app: express.Application;
@@ -35,6 +36,7 @@ class Server {
   }
 
   private setMiddleware() {
+    this.app.use(successHandlingMiddleware);
     this.app.use(errorHandlingMiddleware);
     this.app.use(notFoundExceptionMiddleware);
 

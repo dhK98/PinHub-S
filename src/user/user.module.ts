@@ -50,14 +50,16 @@ export class UserModule implements ServiceModule {
 
   async createDbConnection() {
     const dataSource = this.container.get<DataSource>(TYPES.DataSource);
-    dataSource
-      .initialize()
-      .then(() => {
-        console.log('success connect database');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (dataSource) {
+      dataSource
+        .initialize()
+        .then(() => {
+          console.log('success connect database');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   private setRoute() {

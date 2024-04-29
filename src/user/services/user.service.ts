@@ -11,7 +11,11 @@ export default class UserService {
   async getUserById(userId: String) {
     return '1213';
   }
-  async createUser() {
-    return 'success!!';
+  async createUser() {}
+  async getUsers() {}
+  async checkDuplicateNickname(nickname: string): Promise<boolean> {
+    return true;
   }
+  async getUserBySocialId(socialId: string) {}
+  async deleteUserById() {}
 }

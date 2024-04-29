@@ -2,11 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/user.service';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../_common_/Ioc.symbol/types';
-import { CreateUserDto } from '../dto/request/user.request';
+import { CreateUser, CreateUserDto } from '../dto/request/user.request';
 import { BodyValidate } from '../../_common_/decorator/body.validate.decorator';
-import HttpException from '../../_common_/exception/http.exception';
 import { ClassErrorHandler } from '../../_common_/decorator/class.error.handler.decorator';
-import { ErrorCode } from '../../_common_/exception/error.table';
 
 @ClassErrorHandler
 @injectable()
@@ -19,15 +17,15 @@ export class UserController {
 
   async getUser(req: Request, res: Response, next: NextFunction) {
     const userId = req.params.id;
-    const user = await this.userService.getUserById(userId);
-    throw new HttpException(ErrorCode.NotFound, 'not found user');
+    return await this.userService.getUserById(Number(userId));
   }
+
+  async getUsers(req: Request, res: Response, next: NextFunction) {}
 
   // post user
 
   @BodyValidate(CreateUserDto)
   async createUser(req: Request, res: Response, next: NextFunction) {
-    const newUser = await this.userService.createUser();
-    next(newUser);
+    const newUser = await this.userService.createUser(req.body.user);
   }
 }

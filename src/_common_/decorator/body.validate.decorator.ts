@@ -16,7 +16,9 @@ export function BodyValidate(type: any, skipMissingProperties = false) {
     ) {
       // 미들웨어 함수를 호출합니다.
       try {
+        console.log(req.body);
         const dtoObj = plainToClass(type, req.body);
+        console.log(dtoObj);
         await validate(dtoObj, { skipMissingProperties }).then(
           (errors: ValidationError[]) => {
             if (errors.length > 0) {
@@ -25,7 +27,6 @@ export function BodyValidate(type: any, skipMissingProperties = false) {
                   (Object as any).values(error.constraints)
                 )
                 .join(', ');
-
               throw new Error(dtoErrors);
             } else {
               //sanitize the object and call the next middleware
